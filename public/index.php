@@ -86,6 +86,7 @@
 
                 $resultProductionsDates = $dbh->query($sqlProductionsDates)->fetchAll(PDO::FETCH_CLASS);
 
+                // Format date pour les représentation
                 $fmtMedium = datefmt_create( "fr-FR" ,
                     IntlDateFormatter::FULL,
                     IntlDateFormatter::SHORT,
@@ -93,6 +94,7 @@
                     IntlDateFormatter::GREGORIAN
                 );
 
+                // Format date pour le header
                 $fmtShort = datefmt_create( "fr-FR" ,
                     IntlDateFormatter::LONG,
                     IntlDateFormatter::NONE,
@@ -123,22 +125,26 @@
         </div>
         <div class="informations__cast">
             <h2 class="cast__title">Distribution : <img src="assets/img/person-plus-fill.svg" alt="add performer"> </h2>
-            <div class="cast__name">
-                <p class="name__character">Tosca</p>
-                <p class="name__performer">Marie Lemieux</p>
-            </div>
-            <div class="cast__name">
-                <p class="name__character">Mario Cavaradossi</p>
-                <p class="name__performer">Anja Harteros</p>
-            </div>
-            <div class="cast__name">
-                <p class="name__character">Scarpia</p>
-                <p class="name__performer">Marcelo Spuente</p>
-            </div>
-            <div class="cast__name">
-                <p class="name__character">Cesare Angelotti</p>
-                <p class="name__performer">Luca Salsi</p>
-            </div>
+            
+            <?php 
+                // Récupération des tables productions et productions_date avec l'id de la production selectionnée
+                $sqlDistribution = '
+                    SELECT role, artiste FROM `distribution`
+                    WHERE idProduction = ' . $idProduction . ';
+                ';
+
+                $resultDistribution = $dbh->query($sqlDistribution)->fetchAll(PDO::FETCH_CLASS);
+
+                foreach ($resultDistribution as $distribution) {
+                    ?>
+                        <div class="cast__name">
+                            <p class="name__role"><?= $distribution->role ?></p>
+                            <p class="name__artiste"><?= $distribution->artiste ?></p>
+                        </div>
+
+                    <?php
+                }
+            ?>
         </div>
     </div>
 </body>
