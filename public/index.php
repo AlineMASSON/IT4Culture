@@ -10,6 +10,8 @@
 </head>
 <body>
     <?php 
+        // Connexion BDD
+
         $configData = parse_ini_file(__DIR__.'/../config.ini');
 
         try {
@@ -19,7 +21,6 @@
                 $configData['DB_PASSWORD'],
                 array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING)
             );
-            echo 'Connexion réussie';
         }
         catch(\Exception $exception) {
             echo 'Erreur de connexion...<br>';
@@ -32,11 +33,22 @@
     ?>
     <div class="research">
         <h1 class="research__title">Productions</h1>
-        <select class="research__values" name="productions" id="productions">
-            <option value="1">Tosca</option>
-            <option value="3">Casse Noisette</option>
-            <option value="4">Don Giovanni</option>
-        </select>
+            <?php
+                // Récupéra rtion de la table productions
+                $sqlProductions = '
+                    SELECT `id`, `intitule` FROM `productions`;
+                ';
+                $resultProductions = $dbh->query($sqlProductions)->fetchAll();
+            ?>
+            <select class="research__values" name="productions" id="productions">
+                <?php 
+                    foreach ($resultProductions as $production) { 
+                        ?>
+                        <option value="<?= $production['id'] ?>"><?= $production['intitule'] ?></option>
+                        <?php
+                    }
+                ?>
+            </select>
     </div>
     <div class="informations">
         <div class="informations__header">
