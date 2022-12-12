@@ -1,0 +1,81 @@
+/* === JOIN === */
+
+body {
+  display: flex;
+  margin: 0;
+  height: 100vh;
+  font-family: sans-serif;
+  line-height: 1.25;
+}
+
+/* === LEFT SIDE === */
+
+.research {
+  width: 20%;
+  background-color: #4473c5;
+  padding: 2rem;
+}
+
+.research__title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.research__values {
+  height: 2rem;
+  border: none;
+  font-size: 1.25rem;
+
+}
+
+/* === RIGHT SIDE === */
+
+.informations {
+  padding: 2rem;
+  align-self: center;
+  font-style: italic;
+  flex: 1;
+}
+
+.informations__header,
+.informations__representations {
+  margin-bottom: 4rem;
+}
+
+.header__title {
+  font-size: 1.5rem;
+  font-style: normal;
+}
+
+
+.header__name {
+  font-size: 1.25rem;
+}
+
+.header__dates {
+  color: gray;
+}
+
+.representations__title,
+.cast__title  {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.representations__date {
+  margin-left: 6rem;
+}
+
+.cast__title > img {
+  margin-left: 30%;
+  height: 2rem;
+}
+
+.cast__name {
+  display: flex;
+}
+
+.name__character {
+  width: 30%;
+
+}
