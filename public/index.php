@@ -34,13 +34,14 @@
     <div class="research">
         <h1 class="research__title">Productions</h1>
             <?php
-                // Récupéra rtion de la table productions
+                // Récupération de la table productions
                 $sqlProductions = '
                     SELECT `id`, `intitule` FROM `productions`;
                 ';
                 $resultProductions = $dbh->query($sqlProductions)->fetchAll();
             ?>
             <select class="research__values" name="productions" id="productions">
+                <option value="" selected disabled>Rechercher</option>
                 <?php 
                     foreach ($resultProductions as $production) { 
                         ?>
@@ -49,6 +50,14 @@
                     }
                 ?>
             </select>
+
+            <script>
+                const productions = document.querySelector('.research__values');
+                let productionSelected = "";
+                const handleChangeProduction = (event) => productionSelected = event.target.value;
+                productions.addEventListener('change', handleChangeProduction);
+                console.log(productionSelected);
+            </script>
     </div>
     <div class="informations">
         <div class="informations__header">
