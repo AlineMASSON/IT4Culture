@@ -64,6 +64,10 @@ body {
   margin-left: 6rem;
 }
 
+.representations__date::first-letter {
+  text-transform: uppercase;
+}
+
 .cast__title > img {
   margin-left: 30%;
   height: 2rem;

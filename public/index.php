@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -40,38 +40,86 @@
                 ';
                 $resultProductions = $dbh->query($sqlProductions)->fetchAll();
             ?>
-            <select class="research__values" name="productions" id="productions">
-                <option value="" selected disabled>Rechercher</option>
-                <?php 
-                    foreach ($resultProductions as $production) { 
-                        ?>
-                        <option value="<?= $production['id'] ?>"><?= $production['intitule'] ?></option>
-                        <?php
-                    }
-                ?>
-            </select>
+            <form method="post" action="" id="productionForm">
+                <select class="research__values" name="productions" id="productions">
+                    <option value="0" disabled >Rechercher</option>
+                    <?php
+                        foreach ($resultProductions as $production) {
+                            ?>
+                            <option <?= count($_POST) !== 0 && strval($_POST['productions'])=== $production['id'] ? "selected" : "" ?> value="<?= $production['id'] ?>"><?= $production['intitule'] ?></option>
+                            <?php
+                        }
+                    ?>
+                </select>
+            </form>
 
             <script>
                 const productions = document.querySelector('.research__values');
                 let productionSelected = "";
-                const handleChangeProduction = (event) => productionSelected = event.target.value;
+                const handleChangeProduction = (event) => {
+                    productionSelected = event.target.value
+                    console.log(document.querySelector('#productionForm'));
+                    document.querySelector('#productionForm').submit();
+                };
                 productions.addEventListener('change', handleChangeProduction);
-                console.log(productionSelected);
             </script>
     </div>
     <div class="informations">
         <div class="informations__header">
-            <h2 class="header__title">Tosca</h2>
-            <h3 class="header__name">Giuseppe Verdi</h3>
-            <p class="header__dates">du 11 au 21 janvier 2022</p>
+            <?php
+
+                $idProduction = intval($_POST['productions']);
+
+                // Récupération des tables productions et productions_date avec l'id de la production selectionnée
+                $sqlProductionsDates = '
+                    SELECT
+                        productions.id,
+                        productions.intitule,
+                        productions.compositeur,
+                        productions_dates.dateHeure
+                    FROM `productions`
+
+                    INNER JOIN `productions_dates` ON productions.id = productions_dates.idProduction
+                    WHERE productions.id = ' . $idProduction . '
+                    ORDER BY productions_dates.dateHeure;
+                ';
+
+                $resultProductionsDates = $dbh->query($sqlProductionsDates)->fetchAll(PDO::FETCH_CLASS);
+
+                $fmtMedium = datefmt_create( "fr-FR" ,
+                    IntlDateFormatter::FULL,
+                    IntlDateFormatter::SHORT,
+                    'Europe/Paris',
+                    IntlDateFormatter::GREGORIAN
+                );
+
+                $fmtShort = datefmt_create( "fr-FR" ,
+                    IntlDateFormatter::LONG,
+                    IntlDateFormatter::NONE,
+                    'Europe/Paris',
+                    IntlDateFormatter::GREGORIAN
+                );
+                $firstDate = date_format(date_create($resultProductionsDates[0]->dateHeure), 'j');
+                $lastDate = datefmt_format($fmtShort , date_create(end($resultProductionsDates)->dateHeure));
+            ?>
+            <h2 class="header__title"><?= $resultProductionsDates[0]->intitule ?></h2>
+            <h3 class="header__name"><?= $resultProductionsDates[0]->compositeur ?></h3>
+            <p class="header__dates">du <?= $firstDate?> au <?= $lastDate ?></p>
         </div>
         <div class="informations__representations">
             <h2 class="representations__title">Représentations :</h2>
-            <p class="representations__date">Mardi 11 janvier à 19h30</p>
-            <p class="representations__date">Jeudi 13 janvier à 19h30</p>
-            <p class="representations__date">Samedi 11 janvier à 19h30</p>
-            <p class="representations__date">Jeudi 20 janvier à 19h30</p>
-            <p class="representations__date">Vendredi 21 janvier à 19h30</p>
+            <?php
+                $year = date_format(date_create($resultProductionsDates[0]->dateHeure), 'Y');
+                
+                foreach ($resultProductionsDates as $date) {
+                    $representationsDate = datefmt_format($fmtMedium , date_create($date->dateHeure));
+                    $fmtH = str_replace(':', 'h', $representationsDate);
+                    $fmtYear = str_replace($year . ' ', '', $fmtH);
+                    ?>
+                        <p class="representations__date"><?= $fmtYear ?></p>
+                    <?php
+                }
+            ?>
         </div>
         <div class="informations__cast">
             <h2 class="cast__title">Distribution : <img src="assets/img/person-plus-fill.svg" alt="add performer"> </h2>
