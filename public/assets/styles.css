@@ -19,15 +19,21 @@ body {
 .research__title {
   font-size: 2rem;
   margin-bottom: 2rem;
+  color: white;
 }
 
 .research__values {
+  cursor: pointer;
   height: 2rem;
   border: none;
   font-size: 1.25rem;
 }
 
 /* === RIGHT SIDE === */
+
+.pending {
+  margin: auto;
+}
 
 .informations {
   padding: 2rem;
@@ -69,6 +75,7 @@ body {
 }
 
 .cast__title > img {
+  cursor: pointer;
   margin-left: 30%;
   height: 2rem;
 }
@@ -80,4 +87,71 @@ body {
 .name__role {
   width: 30%;
 
+}
+
+.form-role {
+  padding: 2rem;
+  position: fixed;
+  left: 50vw;
+  top: 50vh;
+  transform: translate(-50%, -50%);
+  box-shadow: 0rem 0rem 1rem rgba(0, 0, 0, 0.5);
+}
+
+.form-role__title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: white;
+  text-align: center;
+}
+
+.form-role__production {
+  cursor: pointer;
+  height: 2rem;
+  border: none;
+  width: 100%;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  background-color: white;
+}
+
+#addRole {
+  background-color: #4473c5;
+  height: fit-content;
+  min-width: 30vw;
+}
+
+.form-role__input {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.form-role__input > label {
+  margin-bottom: 0.5rem;
+}
+
+.form-role__input > input {
+  border: none;
+  height: 2rem;
+  font-size: 1rem;
+}
+
+.form-role__buttons {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 2rem;
+}
+
+.form-role__buttons > button {
+  cursor: pointer;
+  border: none;
+  height: 2rem;
+  background-color: white;
+  width: 40%;
+  font-size: 1rem;
+}
+
+.close {
+  display: none;
 }
