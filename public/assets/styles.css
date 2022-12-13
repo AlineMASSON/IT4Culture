@@ -78,6 +78,11 @@ body {
   cursor: pointer;
   margin-left: 30%;
   height: 2rem;
+  transition: transform 0.4s;
+}
+
+.cast__title > img:hover {
+  transform: scale(1.2);
 }
 
 .cast__name {
@@ -129,6 +134,7 @@ body {
 
 .form-role__input > label {
   margin-bottom: 0.5rem;
+  color: white;
 }
 
 .form-role__input > input {
@@ -150,7 +156,13 @@ body {
   background-color: white;
   width: 40%;
   font-size: 1rem;
+  transition: transform 0.4s;
 }
+
+.form-role__buttons > button:hover {
+  transform: scale(1.05);
+}
+
 
 .close {
   display: none;
