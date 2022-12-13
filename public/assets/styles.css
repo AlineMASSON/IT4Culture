@@ -8,6 +8,20 @@ body {
   line-height: 1.25;
 }
 
+select,
+input {
+  transition: background-color 0.4s;
+}
+
+select:hover,
+input:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+input:focus {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
 /* === LEFT SIDE === */
 
 .research {
@@ -27,8 +41,8 @@ body {
   height: 2rem;
   border: none;
   font-size: 1.25rem;
+  padding: 0 2rem 0 1rem;
 }
-
 /* === RIGHT SIDE === */
 
 .pending {
